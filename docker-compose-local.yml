@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  pharmacy-recommend-redis:
+    container_name: pharmacy-recommend-redis
+    build:
+      dockerfile: Dockerfile
+      context: ./redis
+    image: jnlim/pharmacy-recommend-redis
+    ports:
+      - "6379:6379"
+  pharmacy-recommend-database:
+    container_name: pharmacy-recommend-database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: jnlim/pharmacy-recommend-database
+    environment:
+      - MARIADB_DATABASE=pharmacy-recommend
+      - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
