@@ -17,6 +17,10 @@ configurations {
     }
 }
 
+bootJar {
+    archiveFileName = 'pharmacyRecommendSystem.jar'
+}
+
 repositories {
     mavenCentral()
 }
