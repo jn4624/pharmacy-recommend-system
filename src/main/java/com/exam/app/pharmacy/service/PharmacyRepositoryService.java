@@ -60,4 +60,17 @@ public class PharmacyRepositoryService {
         });
     }
 
+    // readOnly test
+    @Transactional(readOnly = true)
+    public void startReadOnlyMethod(Long id) {
+        pharmacyRepository.findById(id).ifPresent(pharmacy ->
+                pharmacy.changePharmacyAddress("서울특별시 광진구"));
+    }
+
+    // readOnly test
+    @Transactional(readOnly = true)
+    public List<Pharmacy> findAll() {
+        return pharmacyRepository.findAll();
+    }
+
 }

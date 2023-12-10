@@ -82,4 +82,28 @@ class PharmacyRepositoryServiceTest extends AbstractIntegrationContainerBaseTest
         result.size() == 1 // 트랜잭션이 적용되지 않는다
     }
 
+    def "transactional readOnly test"() {
+        given:
+        String inputAddress = "서울특별시 성북구"
+        String modifiedAddress = "서울특별시 광진구"
+        String name = "은혜 약국"
+        double longitude = 128.11
+        double latitude = 36.11
+
+        def input = Pharmacy.builder()
+                .pharmacyAddress(inputAddress)
+                .pharmacyName(name)
+                .longitude(longitude)
+                .latitude(latitude)
+                .build()
+
+        when:
+        def pharmacy = pharmacyRepository.save(input)
+        pharmacyRepositoryService.startReadOnlyMethod(pharmacy.id)
+
+        then:
+        def result = pharmacyRepositoryService.findAll()
+        result.get(0).getPharmacyAddress() == inputAddress // dirty checking이 적용되지 않는다
+    }
+
 }
