@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired
 class PharmacyRepositoryServiceTest extends AbstractIntegrationContainerBaseTest {
 
     @Autowired
-    private PharmacyRepositoryService pharmacyRepositoryService;
+    private PharmacyRepositoryService pharmacyRepositoryService
 
     @Autowired
-    private PharmacyRepository pharmacyRepository;
+    private PharmacyRepository pharmacyRepository
 
     def setup() {
         pharmacyRepository.deleteAll()

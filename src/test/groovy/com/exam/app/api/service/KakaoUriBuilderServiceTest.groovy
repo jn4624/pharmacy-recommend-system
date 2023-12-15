@@ -6,10 +6,10 @@ import java.nio.charset.StandardCharsets
 
 class KakaoUriBuilderServiceTest extends Specification {
 
-    private KakaoUriBuilderService kakaoUriBuilderService;
+    private KakaoUriBuilderService kakaoUriBuilderService
 
     def setup() {
-        kakaoUriBuilderService = new KakaoUriBuilderService();
+        kakaoUriBuilderService = new KakaoUriBuilderService()
     }
 
     def "buildUriByAddressSearch - 한글 파라미터의 경우 정상적으로 인코딩"() {

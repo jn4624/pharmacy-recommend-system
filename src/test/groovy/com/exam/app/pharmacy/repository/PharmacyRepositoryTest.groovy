@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 class PharmacyRepositoryTest extends AbstractIntegrationContainerBaseTest {
 
     @Autowired
-    private PharmacyRepository pharmacyRepository;
+    private PharmacyRepository pharmacyRepository
 
     def setup() {
         // 데이터베이스 초기화

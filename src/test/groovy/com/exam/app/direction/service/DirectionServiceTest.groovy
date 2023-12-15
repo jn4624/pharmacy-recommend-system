@@ -14,7 +14,7 @@ class DirectionServiceTest extends Specification {
     private List<PharmacyDTO> pharmacyList
 
     def setup() {
-        pharmacyList = new ArrayList<>();
+        pharmacyList = new ArrayList<>()
         pharmacyList.addAll(
                 PharmacyDTO.builder()
                     .id(1L)
