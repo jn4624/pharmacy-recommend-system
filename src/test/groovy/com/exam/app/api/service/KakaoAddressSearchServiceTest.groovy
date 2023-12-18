@@ -32,7 +32,7 @@ class KakaoAddressSearchServiceTest extends AbstractIntegrationContainerBaseTest
         result.documentList.get(0).addressName != null
     }
 
-    def "정상적인 주소를 입력했을 경우, 정상적으로 위도와 경로를 반환한다"() {
+    def "정상적인 주소를 입력했을 경우, 정상적으로 위도와 경도를 반환한다"() {
         given:
         boolean actualResult = false
 
