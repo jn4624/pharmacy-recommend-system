@@ -28,8 +28,23 @@
             </div>
         </div>
 
-    <!-- bootstrap, jquery 추가 -->
-    <script src="/js/lib/jquery.min.js"></script>
-    <script src="/js/lib/bootstrap.min.js"></script>
+        <!-- kakao 우편번호 서비스 -->
+        <!-- https://postcode.map.daum.net/guide -->
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+            window.onload = function() {
+                document.getElementById("addressKakao").addEventListener("click", function() {
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                            document.getElementById("addressKakao").value = data.address;
+                        }
+                    }).open();
+                });
+            }
+        </script>
+
+        <!-- bootstrap, jquery 추가 -->
+        <script src="/js/lib/jquery.min.js"></script>
+        <script src="/js/lib/bootstrap.min.js"></script>
     </body>
 </html>
