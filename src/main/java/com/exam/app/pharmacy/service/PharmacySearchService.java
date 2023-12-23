@@ -1,5 +1,6 @@
 package com.exam.app.pharmacy.service;
 
+import com.exam.app.pharmacy.cache.PharmacyRedisTemplateService;
 import com.exam.app.pharmacy.dto.PharmacyDTO;
 import com.exam.app.pharmacy.entity.Pharmacy;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,18 @@ import java.util.stream.Collectors;
 public class PharmacySearchService {
 
     private final PharmacyRepositoryService pharmacyRepositoryService;
+    private final PharmacyRedisTemplateService pharmacyRedisTemplateService;
 
+    // failover 적용
     public List<PharmacyDTO> searchPharmacyDtoList() {
+        // redis
+        List<PharmacyDTO> pharmacyDtoList = pharmacyRedisTemplateService.findAll();
+
+        if (!pharmacyDtoList.isEmpty()) {
+            return pharmacyDtoList;
+        }
+
+        // database
         return pharmacyRepositoryService.findAll()
                 .stream()
                 .map(this::convertToPharmacyDTO)
