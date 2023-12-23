@@ -36,6 +36,7 @@ public class PharmacyRedisTemplateService {
     public void save(PharmacyDTO pharmacyDto) {
         if (Objects.isNull(pharmacyDto) || Objects.isNull(pharmacyDto.getId())) {
             log.error("required values must not be null");
+            return;
         }
 
         try {
@@ -66,7 +67,7 @@ public class PharmacyRedisTemplateService {
     }
 
     public void delete(Long id) {
-        hashOperations.delete(CACHE_KEY, id);
+        hashOperations.delete(CACHE_KEY, id.toString());
         log.info("[PharmacyRedisTemplateService delete success] id: {}", id);
     }
 
