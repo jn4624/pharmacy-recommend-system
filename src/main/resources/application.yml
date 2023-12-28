@@ -49,3 +49,21 @@ spring:
   config:
     activate:
       on-profile: prod
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://pharmacy-recommend-database:3306/pharmacy-recommend
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  data:
+    redis:
+      host: pharmacy-recommend-redis
+      port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+pharmacy:
+  recommend:
+    base:
+      url: http://localhost:8080/dir/

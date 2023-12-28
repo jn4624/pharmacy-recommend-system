@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  pharmacy-recommend-redis:
+    container_name: pharmacy-recommend-redis
+    build:
+      dockerfile: Dockerfile
+      context: ./redis
+    image: jnlim/pharmacy-recommend-redis
+    ports:
+      - "6379:6379"
+  pharmacy-recommend-database:
+    container_name: pharmacy-recommend-database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: jnlim/pharmacy-recommend-database
+    environment:
+      - MARIADB_DATABASE=pharmacy-recommend
+      - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+  pharmacy-recommend-app:
+    container_name: pharmacy-recommend-app
+    build: .
+    depends_on: # db, redis 컨테이너가 실행된 다음 app 컨테이너 실행
+      - pharmacy-recommend-database
+      - pharmacy-recommend-redis
+    image: jnlim/pharmacy-recommend-app
+    environment:
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - KAKAO_REST_API_KEY=${KAKAO_REST_API_KEY}
+    ports:
+      - "80:8080"
+    restart: always # depends on - 실행 순서만 컨트롤, 컨테이너 안 서비스가 실행 가능한 상태인지까지는 체크하지 않음
+                    # db 또는 redis 가 아직 실행 가능한 상태가 아니어서 실패하는 경우 재시작할 수 있도록 설정
